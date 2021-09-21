@@ -1,5 +1,9 @@
 const Audio = require("../models/audio");
 
+module.exports.getAllAudio = async () => {
+  return await Audio.find({}).populate("user");
+};
+
 module.exports.storeAudio = async (payload) => {
   return await Audio.create(payload);
 };

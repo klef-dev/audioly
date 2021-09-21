@@ -1,6 +1,13 @@
-const { storeAudio, retrieveAudio } = require("../services/audio.service");
+const {
+  storeAudio,
+  retrieveAudio,
+  getAllAudio,
+} = require("../services/audio.service");
 
-module.exports.index = async (req, res) => {};
+module.exports.index = async (req, res) => {
+  const audioTracks = await getAllAudio();
+  res.status(200).json(audioTracks);
+};
 
 module.exports.store = async (req, res) => {
   const errors = [];
