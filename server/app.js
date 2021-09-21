@@ -6,6 +6,7 @@ const methodOverride = require("method-override");
 const GridFsStorage = require("multer-gridfs-storage");
 const multer = require("multer");
 const crypto = require("crypto");
+const path = require("path");
 const swaggerUI = require("swagger-ui-express");
 
 // Routes
@@ -74,7 +75,7 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render("error");
+  res.json({ error: err.message });
 });
 
 const docsOptions = {
