@@ -3,9 +3,54 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 // Services
-const { createUser } = require("../services/user.service");
+const { createUser, retrieveUser } = require("../services/user.service");
 
-module.exports.login = async (req, res) => {};
+module.exports.login = async (req, res) => {
+  const logInData = req.body;
+  const user = await retrieveUser({ username: logInData.username });
+
+  if (user) {
+    const isPasswordMatching = await bcrypt.compare(
+      logInData.password,
+      user.password
+    );
+    if (isPasswordMatching) {
+      //create token
+      let payload = {
+        user: {
+          username: user.username,
+          id: user.id,
+        },
+      };
+      try {
+        const token = jwt.sign(payload, `${process.env.JWT_SECRET}`, {
+          expiresIn: "20 days",
+        });
+        user.token = token;
+
+        return res.status(200).json({
+          id: user.id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          username: user.username,
+          token: user.token,
+          interests: user.interests,
+          dob: user.dob,
+        });
+      } catch (error) {
+        return res.status(406).json({ error });
+      }
+    } else {
+      return res.status(404).send({
+        error: "Username or password maybe incorrect",
+      });
+    }
+  } else {
+    return res.status(404).send({
+      error: "This user does not exist or username & password maybe incorrect",
+    });
+  }
+};
 
 module.exports.register = async (req, res) => {
   const errors = validationResult(req);
@@ -34,8 +79,10 @@ module.exports.register = async (req, res) => {
       user.token = token;
 
       return res.status(200).json({
+        id: user.id,
         firstName: user.firstName,
         lastName: user.lastName,
+        username: user.username,
         token: user.token,
         interests: user.interests,
         dob: user.dob,
