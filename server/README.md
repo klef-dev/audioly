@@ -1,31 +1,28 @@
-# Examify
+# Audioly
 
-This project was developer with Nodejs, express, sequelize (POSTGRES).
+This project was developer with Nodejs, express and MongoDB.
 
 ## Installation
 
-1. Clone repository - `$ git clone https://github.com/klefcodes/examify.git`
-2. Move to the directory - `$ cd examify`
+1. Clone repository - `$ git clone https://github.com/klefcodes/audioly.git`
+2. Move to the directory - `$ cd audioly/server`
 
-3. Create a new file `.env` in `config` directory. if it doesn't exist and copy the contents of `.env.example` into it to be able to run your server on production environment.
+3. Create a new file `.env` inside of the `root` directory. if it doesn't exist and copy the contents of `.env.example` into it to be able to run your server on production environment.
 
-4. Install dependencies `$ yarn`.
+4. Install dependencies `$ npm install`.
 
 ## Running the server locally
 
-1. Run a migration and seed sample data - Run `yarn db:migrate && yarn db:seeds`
+1. Start up the server - Run `npm start` | `npm run dev`
 
-2. Start up the server - Run `yarn start` | `yarn dev`
-
-3. Server should be running on http://localhost:3333 by default
+2. Server should be running on http://localhost:3333 by default
 
 ## Routes
 
-| Routes                             | Description        | Payload                                                                                                                                                             |
-| ---------------------------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [GET] &nbsp; /                     | Get /              | none                                                                                                                                                                |
-| [GET] &nbsp; /api/questions        | Get all questions  | none                                                                                                                                                                |
-| [POST] &nbsp; /api/questions       | Create a question  | `{ question: 'What is capital of France', options: [ { text: "Berlin" },{text: "Paris",correct: true }, { text: "Amsterdam" }, { text: "Abuja" }, category_id: 1]}` |
-| [PATCH] &nbsp; /api/questions/:id  | Edit a question    | `{ question: 'What is the result of 2 + 2', options: [ { text: "4", correct: true }, { text: "6" }, { text: "8" }, { text: "10" }, category_id: 1]}`                |
-| [DELETE] &nbsp; /api/questions/:id | Delete a question  | none                                                                                                                                                                |
-| [GET] &nbsp; /api/category         | Get all categories | none                                                                                                                                                                |
+| Routes                        | Description             | Auth | Payload                                                 |
+| ----------------------------- | ----------------------- | ---- | ------------------------------------------------------- |
+| [POST] &nbsp; /user/register  | Create a new account    | ---  | firstName, lastName, dob, interests, username, password |
+| [POST] &nbsp; /user/login     | User sign in            | ---  | username, password                                      |
+| [POST] &nbsp; /audio          | Upload an audio track   | True | file, caption                                           |
+| [GET] &nbsp; /audio           | Get all audio tracks    | ---  | ---                                                     |
+| [GET] &nbsp; /audio/:filename | Render audio to browser | ---  | ---                                                     |
