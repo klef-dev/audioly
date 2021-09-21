@@ -2,6 +2,7 @@ const express = require("express");
 const morgan = require("morgan");
 const helmet = require("helmet");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const methodOverride = require("method-override");
 const GridFsStorage = require("multer-gridfs-storage");
 const multer = require("multer");
@@ -35,6 +36,7 @@ const app = express();
   }
 })();
 
+app.use(cors());
 app.use(morgan("dev"));
 app.use(helmet());
 app.use(express.json());
