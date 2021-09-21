@@ -13,6 +13,9 @@ const swaggerUI = require("swagger-ui-express");
 const userRoute = require("./routes/user");
 const audioRoute = require("./routes/audio");
 
+// Docs
+const docs = require("./docs");
+
 const app = express();
 
 // Connection to MongoDB
@@ -78,29 +81,6 @@ app.use(function (err, req, res, next) {
   res.json({ error: err.message });
 });
 
-const docsOptions = {
-  definition: {
-    openapi: "3.0.0",
-    info: {
-      title: "Audioly API",
-      version: "1.0.0",
-      description:
-        "Backend interview task to build a api that performs some basic user information and an audio track",
-    },
-    servers: [
-      {
-        url: `http://127.0.0.1:${process.env.PORT || 3333}`,
-        description: "Development server",
-      },
-      {
-        url: `http://audioly.tech`,
-        description: "Production server",
-      },
-    ],
-  },
-  apis: ["./routes/*.js"],
-};
-
-app.use("/docs", swaggerUI.setup(docsOptions));
+app.use("/docs", swaggerUI.serve, swaggerUI.setup(docs));
 
 module.exports = app;
