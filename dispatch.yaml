@@ -1,0 +1,3 @@
+dispatch:
+- url: "api.audioly.studio/*"
+  service: audioly-api
