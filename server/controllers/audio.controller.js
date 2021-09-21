@@ -1,8 +1,24 @@
+const mongoose = require("mongoose");
 const {
   storeAudio,
   retrieveAudio,
   getAllAudio,
 } = require("../services/audio.service");
+
+const url = process.env.MONGO_URI;
+const connect = mongoose.createConnection(url, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+let gfs;
+
+connect.once("open", () => {
+  // initialize stream
+  gfs = new mongoose.mongo.GridFSBucket(connect.db, {
+    bucketName: "uploads",
+  });
+});
 
 module.exports.index = async (req, res) => {
   const audioTracks = await getAllAudio();
@@ -51,6 +67,26 @@ module.exports.store = async (req, res) => {
   res.status(200).json({
     success: true,
     audio,
+  });
+};
+
+module.exports.show = (req, res) => {
+  gfs.find({ filename: req.params.filename }).toArray((err, files) => {
+    if (!files[0] || files.length === 0) {
+      return res.status(200).json({
+        success: false,
+        message: "No files available",
+      });
+    }
+
+    if (files[0].contentType === "audio/mpeg") {
+      // render audio to browser
+      gfs.openDownloadStreamByName(req.params.filename).pipe(res);
+    } else {
+      res.status(404).json({
+        err: "Not an auido file",
+      });
+    }
   });
 };
 
