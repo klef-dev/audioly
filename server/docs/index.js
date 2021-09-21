@@ -1,5 +1,6 @@
 const info = require("./info");
 const user = require("./user");
+const audio = require("./audio");
 const definitions = require("./definitions");
 
 module.exports = {
@@ -22,6 +23,14 @@ module.exports = {
   schemes: ["https", "http"],
   paths: {
     ...user,
+    ...audio,
   },
   definitions: { ...definitions },
+  securityDefinitions: {
+    APIKeyHeader: {
+      type: "apiKey",
+      in: "header",
+      name: "Authorization",
+    },
+  },
 };
