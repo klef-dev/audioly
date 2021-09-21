@@ -4,8 +4,8 @@ module.exports.storeAudio = async (payload) => {
   return await Audio.create(payload);
 };
 
-module.exports.retrieveAudio = async (id) => {
-  return await Audio.findOne({ id });
+module.exports.retrieveAudio = async (payload) => {
+  return await Audio.findOne(payload).populate("user");
 };
 
 module.exports.deleteAudio = async (id) => {

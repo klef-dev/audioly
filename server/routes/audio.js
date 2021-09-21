@@ -4,7 +4,7 @@ const isLoggedIn = require("../middleware/isLoggedIn");
 const router = Router();
 
 // Controllers
-const { store } = require("../controllers/audio.controller");
+const { store, index } = require("../controllers/audio.controller");
 
 module.exports = (upload) => {
   const url = process.env.MONGO_URI;
@@ -22,7 +22,7 @@ module.exports = (upload) => {
     });
   });
 
-  router.post("/", isLoggedIn, upload.single("file"), store);
+  router.post("/", upload.single("file"), isLoggedIn, store).get("/", index);
 
   return router;
 };
