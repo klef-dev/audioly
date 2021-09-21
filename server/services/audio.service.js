@@ -5,7 +5,9 @@ module.exports.getAllAudio = async () => {
 };
 
 module.exports.storeAudio = async (payload) => {
-  return await Audio.create(payload);
+  const newAudio = new Audio(payload);
+
+  return await newAudio.save();
 };
 
 module.exports.retrieveAudio = async (payload) => {
