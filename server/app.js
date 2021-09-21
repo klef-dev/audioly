@@ -83,4 +83,8 @@ app.use(function (err, req, res, next) {
 
 app.use("/docs", swaggerUI.serve, swaggerUI.setup(docs));
 
+app.use("/", (req, res) => {
+  res.redirect(301, "/docs");
+});
+
 module.exports = app;
