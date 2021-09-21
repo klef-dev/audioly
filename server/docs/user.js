@@ -27,4 +27,32 @@ module.exports = {
       },
     },
   },
+  "/user/register": {
+    post: {
+      tags: ["User"],
+      summary: "Register user",
+      description: "Register user",
+      operationId: "register",
+      consumes: ["application/json"],
+      produces: ["application/json"],
+      parameters: [
+        {
+          in: "body",
+          name: "body",
+          description: "Register object to be added",
+          schema: {
+            $ref: "#/definitions/RegisterRequest",
+          },
+        },
+      ],
+      responses: {
+        200: {
+          description: "Successfully registered",
+          schema: {
+            $ref: "#/definitions/RegisterResponse",
+          },
+        },
+      },
+    },
+  },
 };
