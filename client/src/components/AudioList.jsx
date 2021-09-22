@@ -57,11 +57,13 @@ export default function AudioList({ audios }) {
                 </div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {audio.interests.map((interest, i) => (
-                  <a href="#" key={i} className="text-blue-500">
-                    #{interest}{audio.interests.length === i+1 ? '': ', '}
-                  </a>
-                ))}
+                {audio.interests &&
+                  audio.interests.map((interest, i) => (
+                    <a href="#" key={i} className="text-blue-500">
+                      #{interest}
+                      {audio.interests.length === i + 1 ? "" : ", "}
+                    </a>
+                  ))}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                 <ReactAudioPlayer
