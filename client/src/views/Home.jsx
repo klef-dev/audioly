@@ -12,7 +12,9 @@ const Home = () => {
 
   useEffect(() => {
     const fetchAudioTracks = async () => {
-      setLoading(true);
+      if (audios.length === 0) {
+        setLoading(true);
+      }
       try {
         await getAudioTracks();
       } catch (error) {
@@ -30,9 +32,7 @@ const Home = () => {
       }
       setLoading(false);
     };
-    if (audios.length === 0) {
-      fetchAudioTracks();
-    }
+    fetchAudioTracks();
   }, [audios, getAudioTracks]);
 
   return (
@@ -44,12 +44,12 @@ const Home = () => {
               The Audioly
             </h2>
             <span className="mt-3 text-xl text-gray-500 sm:mt-4">
-              Welcome to Audioly
+              Welcome to Audioly 😎
             </span>
           </div>
           <div>
             <p className="mt-3 text-xl text-gray-900 sm:mt-4">
-              What will you like to do today?
+              What will you like to do today? 🙃
               <span className="sm:ml-3">
                 <Link
                   to="/upload"
