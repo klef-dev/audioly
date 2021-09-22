@@ -36,6 +36,18 @@ module.exports = {
           type: "string",
           required: true,
         },
+        {
+          in: "formData",
+          name: "dob",
+          type: "string",
+          required: true,
+        },
+        {
+          in: "formData",
+          name: "interests",
+          type: "string",
+          required: true,
+        },
       ],
       responses: {
         200: {

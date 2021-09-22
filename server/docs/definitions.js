@@ -29,14 +29,6 @@ module.exports = {
           token: {
             type: "string",
           },
-          interests: {
-            type: "array",
-            items: {},
-          },
-          dob: {
-            type: "string",
-            format: "date",
-          },
           createdAt: {
             type: "string",
             format: "date",
@@ -46,6 +38,14 @@ module.exports = {
             format: "date",
           },
         },
+      },
+      interests: {
+        type: "array",
+        items: {},
+      },
+      dob: {
+        type: "string",
+        format: "date",
       },
       createdAt: {
         type: "string",
@@ -111,10 +111,6 @@ module.exports = {
       token: {
         type: "string",
       },
-      interests: {
-        type: "array",
-        items: {},
-      },
       dob: {
         type: "string",
         format: "date",
@@ -141,14 +137,6 @@ module.exports = {
       },
       token: {
         type: "string",
-      },
-      interests: {
-        type: "array",
-        items: {},
-      },
-      dob: {
-        type: "string",
-        format: "date",
       },
     },
   },
@@ -182,14 +170,6 @@ module.exports = {
           token: {
             type: "string",
           },
-          interests: {
-            type: "array",
-            items: {},
-          },
-          dob: {
-            type: "string",
-            format: "date",
-          },
           createdAt: {
             type: "string",
             format: "date",
@@ -199,6 +179,14 @@ module.exports = {
             format: "date",
           },
         },
+      },
+      interests: {
+        type: "array",
+        items: {},
+      },
+      dob: {
+        type: "string",
+        format: "date",
       },
       createdAt: {
         type: "string",
