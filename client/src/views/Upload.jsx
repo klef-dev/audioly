@@ -18,7 +18,7 @@ const Upload = () => {
     const file = e.target.files[0];
     const reader = new FileReader();
     setError("");
-    if (file["size"] < 5111775) {
+    if (file["size"] < 6111775) {
       reader.readAsDataURL(file);
       reader.onload = () => {
         setTrack(file);
