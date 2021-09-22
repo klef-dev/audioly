@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useStoreActions } from "easy-peasy";
-import { useHistory, Link } from "react-router-dom";
+import { useStoreActions, useStoreState } from "easy-peasy";
+import { useHistory, Link, Redirect } from "react-router-dom";
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
 const Register = () => {
@@ -13,6 +13,7 @@ const Register = () => {
   const [error, setError] = useState(null);
   const [errors, setErrors] = useState([]);
 
+  const token = useStoreState((state) => state.token);
   const register = useStoreActions((actions) => actions.register);
 
   let history = useHistory();
@@ -38,8 +39,8 @@ const Register = () => {
         if (data.errors) {
           setErrors(data.errors);
         } else if (data.error) {
-			setError(data.error);
-		}
+          setError(data.error);
+        }
       } else {
         setError("Make sure your connection is good");
       }
@@ -53,6 +54,16 @@ const Register = () => {
       setInterest("");
     }
   };
+
+  if (token) {
+    return (
+      <Redirect
+        to={{
+          pathname: "/",
+        }}
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
