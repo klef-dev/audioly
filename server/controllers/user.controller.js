@@ -34,8 +34,6 @@ module.exports.login = async (req, res) => {
           lastName: user.lastName,
           username: user.username,
           token: user.token,
-          interests: user.interests,
-          dob: user.dob,
         });
       } catch (error) {
         return res.status(406).json({ error });
@@ -84,8 +82,6 @@ module.exports.register = async (req, res) => {
         lastName: user.lastName,
         username: user.username,
         token: user.token,
-        interests: user.interests,
-        dob: user.dob,
       });
     } catch (error) {
       return res.status(406).json({ error });

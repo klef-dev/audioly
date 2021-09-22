@@ -6,6 +6,13 @@ const AudioSchema = new Schema(
       required: true,
       type: String,
     },
+    dob: {
+      type: Date,
+      required: true,
+    },
+    interests: {
+      type: [String],
+    },
     filename: {
       required: true,
       type: String,

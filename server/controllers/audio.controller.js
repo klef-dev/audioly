@@ -41,6 +41,20 @@ module.exports.store = async (req, res) => {
       location: "body",
     });
   }
+  if (!req.body.interests) {
+    errors.push({
+      msg: "Interest is required",
+      param: "interests",
+      location: "body",
+    });
+  }
+  if (!req.body.dob) {
+    errors.push({
+      msg: "Date of birth is required",
+      param: "dob",
+      location: "body",
+    });
+  }
 
   if (errors.length) {
     return res.status(422).json({ errors });
@@ -56,6 +70,8 @@ module.exports.store = async (req, res) => {
 
   await storeAudio({
     caption: req.body.caption,
+    interests: JSON.parse(req.body.interests),
+    dob: req.body.dob,
     filename: req.file.filename,
     fileId: req.file.id,
     user: req.body.authUser.id,

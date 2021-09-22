@@ -8,11 +8,26 @@ const Upload = () => {
   const [caption, setCaption] = useState("");
   const [track, setTrack] = useState(null);
   const [newTrack, setNewTrack] = useState(null);
+  const [dob, setDob] = useState("");
+  const [interest, setInterest] = useState("");
+  const [interests, setInterests] = useState([]);
   const [error, setError] = useState(null);
   const [errors, setErrors] = useState([]);
   const [disabled, setDisabled] = useState(false)
   const token = useStoreState((state) => state.token);
   const uploadTrack = useStoreActions((actions) => actions.uploadTrack);
+
+  const handleInterest = (event) => {
+    if (event.key === "Enter" && event.target.value) {
+      event.preventDefault();
+      setInterests((interests) => [...interests, interest]);
+      setInterest("");
+    }
+  };
+
+  const removeInterest = (i) => {
+    setInterests(interests.filter((interest, index) => index !== i))
+  };
 
   const uploadFile = (e) => {
     const file = e.target.files[0];
@@ -35,12 +50,16 @@ const Upload = () => {
     const formData = new FormData();
     formData.append("file", track);
     formData.append("caption", caption);
+    formData.append("dob", dob);
+    formData.append("interests", JSON.stringify(interests));
     setDisabled(true);
     try {
       const data = await uploadTrack(formData);
       setNewTrack(data);
       setCaption("");
       setTrack(null);
+      setInterests([]);
+      setInterest("");
     } catch (error) {
       const { response } = error;
       if (response) {
@@ -107,6 +126,88 @@ const Upload = () => {
                 />
               </div>
             </div>
+
+            <div>
+              <label
+                htmlFor="interests"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Interests
+              </label>
+              <small>To add new interest, press enter.</small>
+              {interests.length ? (
+                <div className="grid grid-cols-1 md:grid-cols-5">
+                  {interests.map((interest, i) => (
+                    <span
+                      key={i}
+                      className="flex justify-center items-center m-1 font-medium py-1 px-2 bg-white rounded-full text-indigo-100 bg-indigo-700 border border-indigo-700"
+                    >
+                      <span className="text-xs font-normal leading-none max-w-full flex-initial">
+                        {interest}
+                      </span>
+                      <span
+                        className="flex flex-auto flex-row-reverse"
+                        onClick={() => removeInterest(i)}
+                      >
+                        <span>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="100%"
+                            height="100%"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="feather feather-x cursor-pointer hover:text-indigo-400 rounded-full w-4 h-4 ml-2"
+                          >
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                          </svg>
+                        </span>
+                      </span>
+                    </span>
+                  ))}
+                </div>
+              ) : (
+                ""
+              )}
+              <div className="mt-1">
+                <input
+                  id="interests"
+                  name="interests"
+                  placeholder="Add interest and press enter to add more"
+                  type="text"
+                  value={interest}
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  onChange={(e) => setInterest(e.target.value)}
+                  onKeyPress={handleInterest}
+                />
+              </div>
+            </div>
+
+            <div>
+              <label
+                htmlFor="dob"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Date of birth
+              </label>
+              <div className="mt-1">
+                <input
+                  id="dob"
+                  name="dob"
+                  type="date"
+                  autoComplete="dob"
+                  required
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  onChange={(e) => setDob(e.target.value)}
+                />
+              </div>
+            </div>
+
+            
 
             <div>
               <label

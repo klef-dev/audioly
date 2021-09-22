@@ -53,13 +53,13 @@ export default function AudioList({ audios }) {
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="text-sm text-gray-500">
-                  {new Date(audio.user.dob).toLocaleDateString()}
+                  {new Date(audio.dob).toLocaleDateString()}
                 </div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {audio.user.interests.map((interest, i) => (
+                {audio.interests.map((interest, i) => (
                   <a href="#" key={i} className="text-blue-500">
-                    #{interest}{audio.user.interests.length === i+1 ? '': ', '}
+                    #{interest}{audio.interests.length === i+1 ? '': ', '}
                   </a>
                 ))}
               </td>
