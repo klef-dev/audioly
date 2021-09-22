@@ -12,9 +12,7 @@ const Home = () => {
 
   useEffect(() => {
     const fetchAudioTracks = async () => {
-      if (audios.length === 0) {
-        setLoading(true);
-      }
+      setLoading(true);
       try {
         await getAudioTracks();
       } catch (error) {
@@ -33,7 +31,7 @@ const Home = () => {
       setLoading(false);
     };
     fetchAudioTracks();
-  }, [audios, getAudioTracks]);
+  }, [getAudioTracks]);
 
   return (
     <div className="bg-gray-50 pt-16 pb-20 px-4 sm:px-6 lg:pt-24 lg:pb-28 lg:px-8">
@@ -69,7 +67,11 @@ const Home = () => {
             <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
               <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                 <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                  <AudioList audios={audios} />
+                  {audios.length ? (
+                    <AudioList audios={audios} />
+                  ) : (
+                    "Hey there 👋, there's no available track yet. You can just upload a new track by clicking the upload button above."
+                  )}
                 </div>
               </div>
             </div>
