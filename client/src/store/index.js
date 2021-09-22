@@ -29,9 +29,9 @@ export default createStore(
       actions.setAudioTracks(data);
       return data;
     }),
-    getTrack: thunk(async (actions, filename, { getState }) => {
+    uploadTrack: thunk(async (actions, payload, { getState }) => {
       const { token, api_uri } = getState();
-      const { data } = await axios.get(`${api_uri}/audio/${filename}`, {
+      const { data } = await axios.post(`${api_uri}/audio`, payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
       return data;

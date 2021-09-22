@@ -49,9 +49,8 @@ module.exports.store = async (req, res) => {
   // check for existing audio track
   const checkAudio = await retrieveAudio({ caption: req.body.caption });
   if (checkAudio) {
-    return res.status(200).json({
-      success: false,
-      message: "Audio track already exists",
+    return res.status(400).json({
+      error: "Audio track already exists",
     });
   }
 
@@ -64,18 +63,14 @@ module.exports.store = async (req, res) => {
 
   const audio = await retrieveAudio({ caption: req.body.caption });
 
-  res.status(200).json({
-    success: true,
-    audio,
-  });
+  res.status(201).json(audio);
 };
 
 module.exports.show = (req, res) => {
   gfs.find({ filename: req.params.filename }).toArray((err, files) => {
     if (!files[0] || files.length === 0) {
-      return res.status(200).json({
-        success: false,
-        message: "No files available",
+      return res.status(400).json({
+        error: "No files available",
       });
     }
 
@@ -84,7 +79,7 @@ module.exports.show = (req, res) => {
       gfs.openDownloadStreamByName(req.params.filename).pipe(res);
     } else {
       res.status(404).json({
-        err: "Not an auido file",
+        error: "Not an auido file",
       });
     }
   });

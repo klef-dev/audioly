@@ -3,6 +3,7 @@ import { useStoreRehydrated } from "easy-peasy";
 
 // Views
 import Home from "./views/Home";
+import Upload from "./views/Upload";
 import Login from "./views/auth/Login";
 import Register from "./views/auth/Register";
 import Navbar from "./components/Navbar";
@@ -17,6 +18,9 @@ const App = () => {
           <Switch>
             <Route path="/" exact>
               <Home />
+            </Route>
+            <Route path="/upload" exact>
+              <Upload />
             </Route>
             <Route path="/login" exact>
               <Login />
